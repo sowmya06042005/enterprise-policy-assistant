@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Policy Assistant | AI Policy Intelligence</title>
+    <meta name="description" content="AI-powered Enterprise Policy Assistant providing accurate answers grounded in official company policy documents using RAG.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-info">
+                    <h1>Enterprise Policy Assistant</h1>
+                    <p>Accurate HR, Travel & Medical policy guidance grounded strictly in company documents</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div id="status-pill" class="status-pill checking">
+                    <span class="status-dot"></span>
+                    <span id="status-text">Connecting...</span>
+                </div>
+                <button id="ingest-btn" class="btn btn-secondary" title="Re-ingest Policy Documents">
+                    <i class="fa-solid fa-rotate"></i> Sync Knowledge Base
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <h3>Knowledge Base</h3>
+                    </div>
+                    <ul class="doc-list">
+                        <li class="doc-item">
+                            <i class="fa-solid fa-file-lines text-indigo"></i>
+                            <div class="doc-details">
+                                <span class="doc-name">leave_policy.txt</span>
+                                <span class="doc-desc">Paid leaves, advance notice, sick leave</span>
+                            </div>
+                        </li>
+                        <li class="doc-item">
+                            <i class="fa-solid fa-file-lines text-emerald"></i>
+                            <div class="doc-details">
+                                <span class="doc-name">travel_policy.txt</span>
+                                <span class="doc-desc">Travel approval, flights & daily allowance</span>
+                            </div>
+                        </li>
+                        <li class="doc-item">
+                            <i class="fa-solid fa-file-lines text-rose"></i>
+                            <div class="doc-details">
+                                <span class="doc-name">insurance.txt</span>
+                                <span class="doc-desc">Health insurance, hospitalization & dependents</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <h3>Suggested Questions</h3>
+                    </div>
+                    <div class="prompt-chips">
+                        <button class="chip-btn" data-query="What is the company leave policy?">
+                            <i class="fa-solid fa-arrow-right-long"></i> How many paid leaves do I get per year?
+                        </button>
+                        <button class="chip-btn" data-query="What is the travel reimbursement policy and claim limit?">
+                            <i class="fa-solid fa-arrow-right-long"></i> What is the travel reimbursement process?
+                        </button>
+                        <button class="chip-btn" data-query="What does the health insurance policy cover for dependents?">
+                            <i class="fa-solid fa-arrow-right-long"></i> What health insurance benefits are covered?
+                        </button>
+                        <button class="chip-btn" data-query="What is the company policy regarding remote work and work from home?">
+                            <i class="fa-solid fa-arrow-right-long"></i> What is the policy for remote work?
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <button id="clear-chat-btn" class="btn btn-danger-outline">
+                        <i class="fa-solid fa-trash-can"></i> Clear Conversation
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Chat Main Container -->
+            <main class="chat-container">
+                <div id="chat-history" class="chat-history">
+                    <!-- Welcome Card -->
+                    <div class="message assistant-message">
+                        <div class="avatar assistant-avatar">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="sender-name">Policy Assistant</span>
+                                <span class="badge badge-rag"><i class="fa-solid fa-brain"></i> RAG Grounded</span>
+                            </div>
+                            <div class="message-body">
+                                Hello! I am your Enterprise Policy Assistant. I can help answer your questions regarding <strong>Leave Policies</strong>, <strong>Travel & Expense Reimbursements</strong>, and <strong>Health Insurance Coverage</strong> based directly on verified company documentation.
+                                <br><br>
+                                Feel free to select a suggested question on the left or type your query below.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Section -->
+                <div class="chat-input-wrapper">
+                    <form id="chat-form" class="chat-form">
+                        <textarea 
+                            id="user-input" 
+                            placeholder="Ask a question about enterprise policies..." 
+                            rows="1" 
+                            required
+                        ></textarea>
+                        <button type="submit" id="send-btn" class="btn btn-primary" title="Send Question">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Send</span>
+                        </button>
+                    </form>
+                    <div class="input-footer">
+                        <span class="footnote"><i class="fa-solid fa-lock"></i> All answers are strictly grounded in indexed company policy documents.</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
