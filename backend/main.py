@@ -191,7 +191,7 @@ Answer:"""
     # 4. Call Google Gemini API
     try:
         client = genai.Client(api_key=gemini_api_key)
-        model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+        model_name = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
         response = client.models.generate_content(
             model=model_name,
             contents=prompt
